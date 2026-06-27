@@ -279,7 +279,7 @@ El sistema permite evidenciar:
 
 **Guillermo Gabriel Noriega**
 
-Proyecto desarrollado para el Trabajo Final de Grado de la Licenciatura en Informática.
+Proyecto desarrollado para el Trabajo Final de Grado de la carrera Licenciatura en Informática.
 
 ---
 
