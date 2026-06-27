@@ -1,0 +1,29 @@
+# Maven / Java
+target/
+*.class
+
+# VS Code
+.vscode/
+.settings/
+.project
+.classpath
+
+# IntelliJ / Eclipse
+.idea/
+*.iml
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Archivos subidos por el sistema
+uploads/
+
+# Variables locales
+.env
+
+# MySQL / bases locales
+*.sql~
