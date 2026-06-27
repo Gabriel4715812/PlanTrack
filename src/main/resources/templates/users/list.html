@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+<head>
+    <title>Gestión de Usuarios</title>
+</head>
+
+<body>
+
+<div layout:fragment="content">
+
+    <div class="container-fluid">
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h2 class="page-title mb-1">Gestión de Usuarios</h2>
+                <p class="text-muted mb-0">
+                    Administración de usuarios, roles y estado de acceso.
+                </p>
+            </div>
+
+            <a th:href="@{/users/new}" class="btn btn-primary">
+                Nuevo Usuario
+            </a>
+        </div>
+
+        <div class="card shadow-sm border-0">
+
+            <div class="card-body">
+
+                <div class="table-responsive">
+
+                    <table class="table table-hover align-middle">
+
+                        <thead class="table-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Usuario</th>
+                            <th>Email</th>
+                            <th>Teléfono</th>
+                            <th>Legajo</th>
+                            <th>Rol</th>
+                            <th>Estado</th>
+                            <th class="text-end">Acciones</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+
+                        <tr th:if="${#lists.isEmpty(users)}">
+                            <td colspan="10" class="text-center text-muted py-4">
+                                No hay usuarios registrados.
+                            </td>
+                        </tr>
+
+                        <tr th:each="user : ${users}">
+
+                            <td th:text="${user.id}"></td>
+
+                            <td th:text="${user.firstName}"></td>
+
+                            <td th:text="${user.lastName}"></td>
+
+                            <td th:text="${user.username}"></td>
+
+                            <td th:text="${user.email}"></td>
+
+                            <td th:text="${user.phone != null ? user.phone : '-'}"></td>
+
+                            <td th:text="${user.docket != null ? user.docket : '-'}"></td>
+
+                            <td>
+                                <span class="badge bg-info text-dark"
+                                      th:text="${user.role.name}">
+                                </span>
+                            </td>
+
+                            <td>
+                                <span th:if="${user.enabled}" class="badge bg-success">
+                                    Activo
+                                </span>
+
+                                <span th:unless="${user.enabled}" class="badge bg-secondary">
+                                    Inactivo
+                                </span>
+                            </td>
+
+                            <td class="text-end">
+
+                                <a th:href="@{'/users/edit/' + ${user.id}}"
+                                   class="btn btn-warning btn-sm">
+                                    Editar
+                                </a>
+
+                                <a th:href="@{'/users/toggle-status/' + ${user.id}}"
+                                   class="btn btn-danger btn-sm"
+                                   onclick="return confirm('¿Desea cambiar el estado de este usuario?')"
+                                   th:text="${user.enabled ? 'Desactivar' : 'Activar'}">
+                                </a>
+
+                            </td>
+
+                        </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

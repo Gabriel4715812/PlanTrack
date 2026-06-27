@@ -1,0 +1,14 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch PlanTrack",
+            "request": "launch",
+            "mainClass": "com.plantrack.PlantrackApplication",
+            "projectName": "PlanTrack"
+        }
+    ],
+    "java.compile.nullAnalysis.mode": "automatic",
+    "java.configuration.updateBuildConfiguration": "interactive"
+}

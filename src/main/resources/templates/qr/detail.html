@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+<head>
+    <title>Detalle del Código QR</title>
+</head>
+
+<body>
+
+<div layout:fragment="content">
+
+    <div class="container-fluid">
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+
+            <div>
+                <h2 class="page-title mb-1">Detalle del Código QR</h2>
+                <p class="text-muted mb-0">
+                    Código QR asociado al plano técnico seleccionado.
+                </p>
+            </div>
+
+            <div class="d-flex gap-2">
+
+                <a th:href="@{'/flats/detail/' + ${qrCode.flat.id}}"
+                   class="btn btn-secondary">
+                    Volver al Plano
+                </a>
+
+                <a th:href="@{/qr}"
+                   class="btn btn-outline-secondary">
+                    Listado QR
+                </a>
+
+            </div>
+
+        </div>
+
+        <div class="row g-4">
+
+            <div class="col-md-5">
+
+                <div class="card shadow-sm border-0">
+
+                    <div class="card-header bg-dark text-white">
+                        Imagen del código QR
+                    </div>
+
+                    <div class="card-body text-center">
+
+                        <img th:src="@{'/qr/image/' + ${qrCode.id}}"
+                             alt="Código QR del plano"
+                             class="img-fluid border rounded p-2"
+                             style="max-width: 350px;">
+
+                        <p class="text-muted mt-3 mb-0">
+                            Escanee este código para acceder al detalle del plano.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-7">
+
+                <div class="card shadow-sm border-0 mb-4">
+
+                    <div class="card-header bg-dark text-white">
+                        Datos del plano asociado
+                    </div>
+
+                    <div class="card-body">
+
+                        <dl class="row">
+
+                            <dt class="col-sm-4">Código del plano</dt>
+                            <dd class="col-sm-8" th:text="${qrCode.flat.code}"></dd>
+
+                            <dt class="col-sm-4">Nombre del plano</dt>
+                            <dd class="col-sm-8" th:text="${qrCode.flat.name}"></dd>
+
+                            <dt class="col-sm-4">Versión actual</dt>
+                            <dd class="col-sm-8">
+                                <span class="badge bg-info text-dark"
+                                      th:text="'V' + ${qrCode.flat.currentVersionNumber}">
+                                </span>
+                            </dd>
+
+                            <dt class="col-sm-4">Sector</dt>
+                            <dd class="col-sm-8"
+                                th:text="${qrCode.flat.position.part.equipment.sector.name}">
+                            </dd>
+
+                            <dt class="col-sm-4">Equipo</dt>
+                            <dd class="col-sm-8"
+                                th:text="${qrCode.flat.position.part.equipment.name}">
+                            </dd>
+
+                            <dt class="col-sm-4">Pieza</dt>
+                            <dd class="col-sm-8"
+                                th:text="${qrCode.flat.position.part.name}">
+                            </dd>
+
+                            <dt class="col-sm-4">Posición</dt>
+                            <dd class="col-sm-8"
+                                th:text="${qrCode.flat.position.name}">
+                            </dd>
+
+                        </dl>
+
+                    </div>
+
+                </div>
+
+                <div class="card shadow-sm border-0">
+
+                    <div class="card-header bg-dark text-white">
+                        Datos del QR
+                    </div>
+
+                    <div class="card-body">
+
+                        <dl class="row">
+
+                            <dt class="col-sm-4">URL destino</dt>
+                            <dd class="col-sm-8">
+                                <a th:href="${qrCode.targetUrl}"
+                                   th:text="${qrCode.targetUrl}"
+                                   target="_blank">
+                                </a>
+                            </dd>
+
+                            <dt class="col-sm-4">Valor QR</dt>
+                            <dd class="col-sm-8">
+                                <span th:text="${qrCode.qrValue}"></span>
+                            </dd>
+
+                            <dt class="col-sm-4">Fecha de creación</dt>
+                            <dd class="col-sm-8"
+                                th:text="${#temporals.format(qrCode.createdAt, 'dd/MM/yyyy HH:mm')}">
+                            </dd>
+
+                            <dt class="col-sm-4">Estado</dt>
+                            <dd class="col-sm-8">
+                                <span th:if="${qrCode.active}" class="badge bg-success">
+                                    Activo
+                                </span>
+
+                                <span th:unless="${qrCode.active}" class="badge bg-secondary">
+                                    Inactivo
+                                </span>
+                            </dd>
+
+                        </dl>
+
+                        <div class="d-flex gap-2 mt-3">
+
+                            <a th:href="@{'/qr/image/' + ${qrCode.id}}"
+                               target="_blank"
+                               class="btn btn-primary">
+                                Abrir imagen QR
+                            </a>
+
+                            <a th:href="@{'/flats/detail/' + ${qrCode.flat.id}}"
+                               class="btn btn-secondary">
+                                Ver plano
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+<head>
+    <title>Nueva Pieza</title>
+</head>
+
+<body>
+
+<div layout:fragment="content">
+
+    <div class="container-fluid">
+
+        <div class="mb-4">
+            <h2 class="page-title mb-1">Registrar Pieza</h2>
+            <p class="text-muted mb-0">
+                Complete los datos de la pieza y asígnela a un equipo.
+            </p>
+        </div>
+
+        <div class="card shadow-sm border-0">
+
+            <div class="card-body">
+
+                <div class="alert alert-danger"
+                     th:if="${error != null}"
+                     th:text="${error}">
+                </div>
+
+                <form th:action="@{/parts/save}"
+                      th:object="${part}"
+                      method="post">
+
+                    <input type="hidden"
+                           th:name="${_csrf.parameterName}"
+                           th:value="${_csrf.token}">
+
+                    <div class="row">
+
+                        <div class="col-md-6 mb-3">
+                            <label for="name" class="form-label">
+                                Nombre de la pieza
+                            </label>
+
+                            <input type="text"
+                                   id="name"
+                                   class="form-control"
+                                   th:field="*{name}"
+                                   placeholder="Ejemplo: Rotor">
+
+                            <div class="text-danger small"
+                                 th:if="${#fields.hasErrors('name')}"
+                                 th:errors="*{name}">
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="code" class="form-label">
+                                Código
+                            </label>
+
+                            <input type="number"
+                                   id="code"
+                                   class="form-control"
+                                   th:field="*{code}"
+                                   placeholder="Ejemplo: 1001">
+
+                            <div class="text-danger small"
+                                 th:if="${#fields.hasErrors('code')}"
+                                 th:errors="*{code}">
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="description" class="form-label">
+                            Descripción
+                        </label>
+
+                        <textarea id="description"
+                                  class="form-control"
+                                  rows="4"
+                                  th:field="*{description}"
+                                  placeholder="Descripción breve de la pieza"></textarea>
+
+                        <div class="text-danger small"
+                             th:if="${#fields.hasErrors('description')}"
+                             th:errors="*{description}">
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="equipmentId" class="form-label">
+                            Equipo
+                        </label>
+
+                        <select id="equipmentId"
+                                class="form-select"
+                                th:field="*{equipmentId}">
+
+                            <option value="">
+                                Seleccione un equipo...
+                            </option>
+
+                            <option th:each="equipment : ${equipments}"
+                                    th:value="${equipment.id}"
+                                    th:text="${equipment.name + ' - Sector: ' + equipment.sector.name}">
+                            </option>
+
+                        </select>
+
+                        <div class="text-danger small"
+                             th:if="${#fields.hasErrors('equipmentId')}"
+                             th:errors="*{equipmentId}">
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-end gap-2">
+
+                        <a th:href="@{/parts}" class="btn btn-secondary">
+                            Cancelar
+                        </a>
+
+                        <button type="submit" class="btn btn-primary">
+                            Guardar Pieza
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

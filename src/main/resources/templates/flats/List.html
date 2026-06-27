@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layout}">
+
+<head>
+    <title>Gestión de Planos</title>
+</head>
+
+<body>
+
+<div layout:fragment="content">
+
+    <div class="container-fluid">
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h2 class="page-title mb-1">Gestión de Planos</h2>
+                <p class="text-muted mb-0">
+                    Administración de planos técnicos asociados a posiciones industriales.
+                </p>
+            </div>
+
+            <a sec:authorize="hasAnyRole('ADMIN','DESIGNER')"
+            th:href="@{/flats/new}"
+            class="btn btn-primary">
+                Nuevo Plano
+            </a>
+        </div>
+
+        <div class="card shadow-sm border-0 mb-4">
+            <div class="card-body">
+
+                <form th:action="@{/flats/search}" method="get" class="row g-3">
+
+                    <div class="col-md-8">
+                        <input type="text"
+                               name="keyword"
+                               class="form-control"
+                               placeholder="Buscar por código, nombre o descripción..."
+                               th:value="${keyword}">
+                    </div>
+
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-secondary w-100">
+                            Buscar
+                        </button>
+                    </div>
+
+                    <div class="col-md-2">
+                        <a th:href="@{/flats}" class="btn btn-outline-secondary w-100">
+                            Limpiar
+                        </a>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
+        <div class="card shadow-sm border-0">
+
+            <div class="card-body">
+
+                <div class="table-responsive">
+
+                    <table class="table table-hover align-middle">
+
+                        <thead class="table-dark">
+                        <tr>
+                            <th>Código</th>
+                            <th>Nombre</th>
+                            <th>Posición</th>
+                            <th>Pieza</th>
+                            <th>Equipo</th>
+                            <th>Versión</th>
+                            <th>Archivo</th>
+                            <th>Estado</th>
+                            <th class="text-end">Acciones</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+
+                        <tr th:if="${#lists.isEmpty(flats)}">
+                            <td colspan="9" class="text-center text-muted py-4">
+                                No hay planos registrados.
+                            </td>
+                        </tr>
+
+                        <tr th:each="flat : ${flats}">
+
+                            <td th:text="${flat.code}"></td>
+
+                            <td th:text="${flat.name}"></td>
+
+                            <td th:text="${flat.position.name}"></td>
+
+                            <td th:text="${flat.position.part.name}"></td>
+
+                            <td th:text="${flat.position.part.equipment.name}"></td>
+
+                            <td>
+                                <span class="badge bg-info text-dark"
+                                      th:text="'V' + ${flat.currentVersionNumber}">
+                                </span>
+                            </td>
+
+                            <td>
+                                <span th:if="${flat.fileName != null}"
+                                      th:text="${flat.fileName}">
+                                </span>
+
+                                <span th:unless="${flat.fileName != null}"
+                                      class="text-muted">
+                                    Sin archivo
+                                </span>
+                            </td>
+
+                            <td>
+                                <span th:if="${flat.active}" class="badge bg-success">
+                                    Activo
+                                </span>
+
+                                <span th:unless="${flat.active}" class="badge bg-secondary">
+                                    Inactivo
+                                </span>
+                            </td>
+
+                            <td class="text-end">
+
+                                <a th:href="@{'/flats/detail/' + ${flat.id}}"
+                                   class="btn btn-info btn-sm">
+                                    Ver
+                                </a>
+
+                                <a sec:authorize="hasAnyRole('ADMIN','DESIGNER')"
+                                th:href="@{'/flats/edit/' + ${flat.id}}"
+                                class="btn btn-warning btn-sm">
+                                    Editar
+                                </a>
+
+                                <a th:if="${flat.fileName != null}"
+                                th:href="@{'/flats/view/' + ${flat.id}}"
+                                class="btn btn-secondary btn-sm"
+                                target="_blank">
+                                    Visualizar
+                                </a>
+
+                                <a th:if="${flat.fileName != null}"
+                                th:href="@{'/flats/download/' + ${flat.id}}"
+                                class="btn btn-success btn-sm">
+                                    Descargar
+                                </a>
+
+                                <a sec:authorize="hasAnyRole('ADMIN','DESIGNER')"
+                                th:href="@{'/flats/delete/' + ${flat.id}}"
+                                class="btn btn-danger btn-sm"
+                                onclick="return confirm('¿Desea deshabilitar este plano?')">
+                                    Eliminar
+                                </a>
+
+                            </td>
+
+                        </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

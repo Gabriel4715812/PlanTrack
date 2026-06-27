@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+<head>
+    <title>Detalle de Versión</title>
+</head>
+
+<body>
+
+<div layout:fragment="content">
+
+    <div class="container-fluid">
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+
+            <div>
+                <h2 class="page-title mb-1">Detalle de Versión</h2>
+                <p class="text-muted mb-0">
+                    Información de la versión registrada para el plano.
+                </p>
+            </div>
+
+            <div class="d-flex gap-2">
+
+                <a th:href="@{'/versions/flat/' + ${version.flat.id}}"
+                   class="btn btn-secondary">
+                    Historial
+                </a>
+
+                <a th:href="@{'/flats/detail/' + ${version.flat.id}}"
+                   class="btn btn-outline-secondary">
+                    Volver al Plano
+                </a>
+
+            </div>
+
+        </div>
+
+        <div class="row g-4">
+
+            <div class="col-md-8">
+
+                <div class="card shadow-sm border-0 h-100">
+
+                    <div class="card-header bg-dark text-white">
+                        Datos de la versión
+                    </div>
+
+                    <div class="card-body">
+
+                        <dl class="row">
+
+                            <dt class="col-sm-4">Plano</dt>
+                            <dd class="col-sm-8">
+                                <strong th:text="${version.flat.code}"></strong>
+                                -
+                                <span th:text="${version.flat.name}"></span>
+                            </dd>
+
+                            <dt class="col-sm-4">Número de versión</dt>
+                            <dd class="col-sm-8">
+                                <span class="badge bg-info text-dark"
+                                      th:text="'V' + ${version.versionNumber}">
+                                </span>
+                            </dd>
+
+                            <dt class="col-sm-4">Descripción del cambio</dt>
+                            <dd class="col-sm-8"
+                                th:text="${version.changeDescription != null && !version.changeDescription.isEmpty() ? version.changeDescription : 'Sin descripción'}">
+                            </dd>
+
+                            <dt class="col-sm-4">Creado por</dt>
+                            <dd class="col-sm-8"
+                                th:text="${version.createdBy != null ? version.createdBy.username : 'No registrado'}">
+                            </dd>
+
+                            <dt class="col-sm-4">Fecha de creación</dt>
+                            <dd class="col-sm-8"
+                                th:text="${#temporals.format(version.createdAt, 'dd/MM/yyyy HH:mm')}">
+                            </dd>
+
+                            <dt class="col-sm-4">Estado</dt>
+                            <dd class="col-sm-8">
+                                <span th:if="${version.active}" class="badge bg-success">
+                                    Activa
+                                </span>
+
+                                <span th:unless="${version.active}" class="badge bg-secondary">
+                                    Inactiva
+                                </span>
+                            </dd>
+
+                        </dl>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-4">
+
+                <div class="card shadow-sm border-0 mb-4">
+
+                    <div class="card-header bg-dark text-white">
+                        Archivo de la versión
+                    </div>
+
+                    <div class="card-body">
+
+                        <p>
+                            <strong>Nombre:</strong><br>
+                            <span th:text="${version.fileName != null ? version.fileName : 'Sin archivo'}"></span>
+                        </p>
+
+                        <p>
+                            <strong>Tipo:</strong><br>
+                            <span th:text="${version.contentType != null ? version.contentType : 'No disponible'}"></span>
+                        </p>
+
+                        <div th:if="${version.fileName != null}" class="d-grid gap-2">
+
+                            <a th:href="@{'/versions/view/' + ${version.id}}"
+                               class="btn btn-secondary"
+                               target="_blank">
+                                Visualizar archivo
+                            </a>
+
+                            <a th:href="@{'/versions/download/' + ${version.id}}"
+                               class="btn btn-success">
+                                Descargar archivo
+                            </a>
+
+                        </div>
+
+                        <button th:unless="${version.fileName != null}"
+                                class="btn btn-secondary w-100"
+                                disabled>
+                            Sin archivo disponible
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <div class="card shadow-sm border-0">
+
+                    <div class="card-header bg-dark text-white">
+                        Ubicación técnica
+                    </div>
+
+                    <div class="card-body">
+
+                        <p>
+                            <strong>Sector:</strong><br>
+                            <span th:text="${version.flat.position.part.equipment.sector.name}"></span>
+                        </p>
+
+                        <p>
+                            <strong>Equipo:</strong><br>
+                            <span th:text="${version.flat.position.part.equipment.name}"></span>
+                        </p>
+
+                        <p>
+                            <strong>Pieza:</strong><br>
+                            <span th:text="${version.flat.position.part.name}"></span>
+                        </p>
+
+                        <p>
+                            <strong>Posición:</strong><br>
+                            <span th:text="${version.flat.position.name}"></span>
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

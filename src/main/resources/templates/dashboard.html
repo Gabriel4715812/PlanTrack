@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layout}">
+
+<head>
+    <title>Dashboard</title>
+</head>
+
+<body>
+
+<div layout:fragment="content">
+
+    <div class="container-fluid">
+
+        <div class="mb-4">
+            <h2 class="page-title mb-1">Panel principal</h2>
+            <p class="text-muted mb-0">
+                Bienvenido al sistema de gestión y trazabilidad de planos técnicos e industriales.
+            </p>
+        </div>
+
+        <div class="row g-4">
+
+            <!-- Gestión de Usuarios - Solo ADMIN -->
+            <div class="col-md-4" sec:authorize="hasRole('ADMIN')">
+                <div class="card shadow-sm border-0 h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Gestión de Usuarios</h5>
+                        <p class="card-text">
+                            Administrar usuarios, roles y estados de acceso al sistema.
+                        </p>
+                        <a th:href="@{/users}" class="btn btn-primary">
+                            Acceder
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gestión de Sectores - ADMIN y DESIGNER -->
+            <div class="col-md-4" sec:authorize="hasAnyRole('ADMIN','DESIGNER')">
+                <div class="card shadow-sm border-0 h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Gestión de Sectores</h5>
+                        <p class="card-text">
+                            Registrar y administrar los sectores industriales de la organización.
+                        </p>
+                        <a th:href="@{/sectors}" class="btn btn-primary">
+                            Acceder
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gestión de Equipos - ADMIN y DESIGNER -->
+            <div class="col-md-4" sec:authorize="hasAnyRole('ADMIN','DESIGNER')">
+                <div class="card shadow-sm border-0 h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Gestión de Equipos</h5>
+                        <p class="card-text">
+                            Registrar equipos asociados a los sectores industriales.
+                        </p>
+                        <a th:href="@{/equipments}" class="btn btn-primary">
+                            Acceder
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gestión de Piezas - ADMIN y DESIGNER -->
+            <div class="col-md-4" sec:authorize="hasAnyRole('ADMIN','DESIGNER')">
+                <div class="card shadow-sm border-0 h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Gestión de Piezas</h5>
+                        <p class="card-text">
+                            Registrar piezas asociadas a los equipos industriales.
+                        </p>
+                        <a th:href="@{/parts}" class="btn btn-primary">
+                            Acceder
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gestión de Posiciones - ADMIN y DESIGNER -->
+            <div class="col-md-4" sec:authorize="hasAnyRole('ADMIN','DESIGNER')">
+                <div class="card shadow-sm border-0 h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Gestión de Posiciones</h5>
+                        <p class="card-text">
+                            Administrar posiciones técnicas asociadas a cada pieza.
+                        </p>
+                        <a th:href="@{/positions}" class="btn btn-primary">
+                            Acceder
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gestión de Planos - ADMIN, DESIGNER y OPERATOR -->
+            <div class="col-md-4" sec:authorize="hasAnyRole('ADMIN','DESIGNER','OPERATOR')">
+                <div class="card shadow-sm border-0 h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Gestión de Planos</h5>
+                        <p class="card-text">
+                            Cargar, consultar y actualizar planos técnicos e industriales.
+                        </p>
+                        <a th:href="@{/flats}" class="btn btn-primary">
+                            Acceder
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Versiones de Planos - ADMIN, DESIGNER y OPERATOR -->
+            <div class="col-md-4" sec:authorize="hasAnyRole('ADMIN','DESIGNER','OPERATOR')">
+                <div class="card shadow-sm border-0 h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Versiones de Planos</h5>
+                        <p class="card-text">
+                            Consultar el historial de versiones registradas para cada plano.
+                        </p>
+                        <a th:href="@{/versions}" class="btn btn-primary">
+                            Acceder
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Códigos QR - ADMIN, DESIGNER y OPERATOR -->
+            <div class="col-md-4" sec:authorize="hasAnyRole('ADMIN','DESIGNER','OPERATOR')">
+                <div class="card shadow-sm border-0 h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Códigos QR</h5>
+                        <p class="card-text">
+                            Consultar códigos QR generados para acceder rápidamente a los planos.
+                        </p>
+                        <a th:href="@{/qr}" class="btn btn-primary">
+                            Acceder
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Mensaje visible solo para OPERATOR -->
+        <div class="alert alert-info mt-4"
+             sec:authorize="hasRole('OPERATOR')">
+
+            <strong>Modo Operario:</strong>
+            su perfil permite consultar planos, visualizar archivos, descargar documentación,
+            revisar versiones y acceder mediante códigos QR. Las funciones de administración
+            quedan restringidas al Administrador o Diseñador.
+
+        </div>
+
+        <!-- Mensaje visible solo para DESIGNER -->
+        <div class="alert alert-info mt-4"
+             sec:authorize="hasRole('DESIGNER')">
+
+            <strong>Modo Diseñador:</strong>
+            su perfil permite administrar la estructura técnica, cargar planos,
+            registrar nuevas versiones y generar códigos QR. La gestión de usuarios
+            queda reservada al Administrador.
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

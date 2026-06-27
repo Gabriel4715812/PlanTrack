@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+<head>
+    <title>Códigos QR</title>
+</head>
+
+<body>
+
+<div layout:fragment="content">
+
+    <div class="container-fluid">
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+
+            <div>
+                <h2 class="page-title mb-1">Códigos QR</h2>
+                <p class="text-muted mb-0">
+                    Listado de códigos QR generados para el acceso rápido a planos técnicos.
+                </p>
+            </div>
+
+            <a th:href="@{/flats}" class="btn btn-primary">
+                Ir a Planos
+            </a>
+
+        </div>
+
+        <div class="card shadow-sm border-0">
+
+            <div class="card-body">
+
+                <div class="table-responsive">
+
+                    <table class="table table-hover align-middle">
+
+                        <thead class="table-dark">
+                        <tr>
+                            <th>Plano</th>
+                            <th>Código del Plano</th>
+                            <th>URL destino</th>
+                            <th>Fecha de creación</th>
+                            <th>Estado</th>
+                            <th class="text-end">Acciones</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+
+                        <tr th:if="${#lists.isEmpty(qrCodes)}">
+                            <td colspan="6" class="text-center text-muted py-4">
+                                No hay códigos QR generados.
+                            </td>
+                        </tr>
+
+                        <tr th:each="qr : ${qrCodes}">
+
+                            <td th:text="${qr.flat.name}"></td>
+
+                            <td>
+                                <strong th:text="${qr.flat.code}"></strong>
+                            </td>
+
+                            <td>
+                                <span class="text-muted"
+                                      th:text="${qr.targetUrl}">
+                                </span>
+                            </td>
+
+                            <td th:text="${#temporals.format(qr.createdAt, 'dd/MM/yyyy HH:mm')}"></td>
+
+                            <td>
+                                <span th:if="${qr.active}" class="badge bg-success">
+                                    Activo
+                                </span>
+
+                                <span th:unless="${qr.active}" class="badge bg-secondary">
+                                    Inactivo
+                                </span>
+                            </td>
+
+                            <td class="text-end">
+
+                                <a th:href="@{'/qr/detail/' + ${qr.id}}"
+                                   class="btn btn-info btn-sm">
+                                    Ver QR
+                                </a>
+
+                                <a th:href="@{'/flats/detail/' + ${qr.flat.id}}"
+                                   class="btn btn-secondary btn-sm">
+                                    Ver Plano
+                                </a>
+
+                            </td>
+
+                        </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

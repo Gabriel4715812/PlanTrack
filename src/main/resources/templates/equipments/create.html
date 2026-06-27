@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+<head>
+
+    <title>Nuevo Equipo</title>
+
+</head>
+
+<body>
+
+<div layout:fragment="content">
+
+<div class="container">
+
+<h2 class="mb-4">
+
+Registrar Equipo
+
+</h2>
+
+<form
+th:action="@{/equipments/save}"
+th:object="${equipment}"
+method="post">
+
+<div class="mb-3">
+
+<label>
+
+Nombre
+
+</label>
+
+<input
+class="form-control"
+type="text"
+th:field="*{name}">
+
+</div>
+
+<div class="mb-3">
+
+<label>
+
+Código
+
+</label>
+
+<input
+class="form-control"
+type="number"
+th:field="*{code}">
+
+</div>
+
+<div class="mb-3">
+
+<label>
+
+Descripción
+
+</label>
+
+<textarea
+class="form-control"
+rows="4"
+th:field="*{description}">
+
+</textarea>
+
+</div>
+
+<div class="mb-3">
+
+<label>
+
+Sector
+
+</label>
+
+<select
+class="form-select"
+th:field="*{sectorId}">
+
+<option value="">
+
+Seleccione...
+
+</option>
+
+<option
+th:each="sector : ${sectors}"
+th:value="${sector.id}"
+th:text="${sector.name}">
+
+</option>
+
+</select>
+
+</div>
+
+<button
+class="btn btn-success">
+
+Guardar
+
+</button>
+
+<a
+class="btn btn-secondary"
+th:href="@{/equipments}">
+
+Cancelar
+
+</a>
+
+</form>
+
+</div>
+
+</div>
+
+</body>
+
+</html>
