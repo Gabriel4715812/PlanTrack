@@ -75,7 +75,37 @@ public class UserService {
 
         userRepository.save(user);
     }
+public void registerPublicUser(UserForm form) {
 
+    if (form.getUsername() == null || form.getUsername().isBlank()) {
+        throw new RuntimeException("El nombre de usuario es obligatorio.");
+    }
+
+    if (form.getPassword() == null || form.getPassword().isBlank()) {
+        throw new RuntimeException("La contraseña es obligatoria.");
+    }
+
+    if (userRepository.findByUsername(form.getUsername()).isPresent()) {
+        throw new RuntimeException("Ya existe un usuario registrado con ese nombre de usuario.");
+    }
+
+    Role operatorRole = roleRepository.findByName("OPERATOR")
+            .orElseThrow(() -> new RuntimeException("No se encontró el rol OPERATOR."));
+
+    User user = new User();
+
+    user.setFirstName(form.getFirstName());
+    user.setLastName(form.getLastName());
+    user.setUsername(form.getUsername());
+    user.setEmail(form.getEmail());
+    user.setPhone(form.getPhone());
+    user.setDocket(form.getDocket());
+    user.setPasswordHash(passwordEncoder.encode(form.getPassword()));
+    user.setEnabled(true);
+    user.setRole(operatorRole);
+
+    userRepository.save(user);
+}
     public void update(UserForm form) {
         User user = findById(form.getId());
 

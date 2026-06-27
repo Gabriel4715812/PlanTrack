@@ -13,158 +13,97 @@
 
 <div layout:fragment="content">
 
-    <div class="container-fluid">
+    <div class="dashboard-wrapper">
 
-        <div class="mb-4">
-            <h2 class="page-title mb-1">Panel principal</h2>
-            <p class="text-muted mb-0">
-                Bienvenido al sistema de gestión y trazabilidad de planos técnicos e industriales.
-            </p>
+        <div class="page-header">
+            <h1 class="page-title">Panel principal</h1>
+            
         </div>
 
         <div class="row g-4">
 
-            <!-- Gestión de Usuarios - Solo ADMIN -->
-            <div class="col-md-4" sec:authorize="hasRole('ADMIN')">
-                <div class="card shadow-sm border-0 h-100">
-                    <div class="card-body">
-                        <h5 class="card-title">Gestión de Usuarios</h5>
-                        <p class="card-text">
-                            Administrar usuarios, roles y estados de acceso al sistema.
-                        </p>
-                        <a th:href="@{/users}" class="btn btn-primary">
-                            Acceder
-                        </a>
+            <div class="col-lg-8">
+                <div class="dashboard-card">
+                    <h3 class="dashboard-card-title">Bienvenido a PlanTrack</h3>
+                    <p class="dashboard-card-text">
+                        Este sistema permite centralizar la documentación técnica industrial,
+                        organizar planos por estructura jerárquica, controlar versiones y
+                        facilitar el acceso rápido mediante códigos QR.
+                    </p>
+
+                    <div class="dashboard-badges">
+                        <span class="dashboard-badge">Gestión documental</span>
+                        <span class="dashboard-badge">Control de versiones</span>
+                        <span class="dashboard-badge">Acceso por QR</span>
+                        <span class="dashboard-badge">Trazabilidad técnica</span>
                     </div>
                 </div>
             </div>
 
-            <!-- Gestión de Sectores - ADMIN y DESIGNER -->
-            <div class="col-md-4" sec:authorize="hasAnyRole('ADMIN','DESIGNER')">
-                <div class="card shadow-sm border-0 h-100">
-                    <div class="card-body">
-                        <h5 class="card-title">Gestión de Sectores</h5>
-                        <p class="card-text">
-                            Registrar y administrar los sectores industriales de la organización.
-                        </p>
-                        <a th:href="@{/sectors}" class="btn btn-primary">
-                            Acceder
-                        </a>
+            <div class="col-lg-4">
+                <div class="dashboard-card">
+                    <h3 class="dashboard-card-title">Sesión actual</h3>
+
+                    <div class="session-info">
+                        <div class="session-row">
+                            <span class="session-label">Usuario:</span>
+                            <span class="session-value" sec:authentication="name"></span>
+                        </div>
+
+                        <div class="session-row">
+                            <span class="session-label">Rol:</span>
+                            <span class="session-value">
+                                <span sec:authorize="hasRole('ADMIN')">Administrador</span>
+                                <span sec:authorize="hasRole('DESIGNER')">Diseñador</span>
+                                <span sec:authorize="hasRole('OPERATOR')">Operario</span>
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Gestión de Equipos - ADMIN y DESIGNER -->
-            <div class="col-md-4" sec:authorize="hasAnyRole('ADMIN','DESIGNER')">
-                <div class="card shadow-sm border-0 h-100">
-                    <div class="card-body">
-                        <h5 class="card-title">Gestión de Equipos</h5>
-                        <p class="card-text">
-                            Registrar equipos asociados a los sectores industriales.
-                        </p>
-                        <a th:href="@{/equipments}" class="btn btn-primary">
-                            Acceder
-                        </a>
-                    </div>
+            <div class="col-lg-6">
+                <div class="dashboard-card">
+                    <h3 class="dashboard-card-title">Acceso según rol</h3>
+
+                    <ul class="dashboard-list" sec:authorize="hasRole('ADMIN')">
+                        <li>Gestionar usuarios del sistema.</li>
+                        <li>Administrar sectores, equipos, piezas y posiciones.</li>
+                        <li>Registrar y actualizar planos.</li>
+                        <li>Gestionar versiones de planos.</li>
+                        <li>Generar y consultar códigos QR.</li>
+                    </ul>
+
+                    <ul class="dashboard-list" sec:authorize="hasRole('DESIGNER')">
+                        <li>Administrar la estructura técnica del sistema.</li>
+                        <li>Registrar y actualizar planos técnicos.</li>
+                        <li>Cargar nuevas versiones.</li>
+                        <li>Generar y consultar códigos QR.</li>
+                        <li>No posee acceso a gestión de usuarios.</li>
+                    </ul>
+
+                    <ul class="dashboard-list" sec:authorize="hasRole('OPERATOR')">
+                        <li>Consultar planos cargados en el sistema.</li>
+                        <li>Visualizar y descargar documentación técnica.</li>
+                        <li>Consultar historial de versiones.</li>
+                        <li>Visualizar códigos QR asociados a los planos.</li>
+                        <li>No posee permisos de edición o administración.</li>
+                    </ul>
                 </div>
             </div>
 
-            <!-- Gestión de Piezas - ADMIN y DESIGNER -->
-            <div class="col-md-4" sec:authorize="hasAnyRole('ADMIN','DESIGNER')">
-                <div class="card shadow-sm border-0 h-100">
-                    <div class="card-body">
-                        <h5 class="card-title">Gestión de Piezas</h5>
-                        <p class="card-text">
-                            Registrar piezas asociadas a los equipos industriales.
-                        </p>
-                        <a th:href="@{/parts}" class="btn btn-primary">
-                            Acceder
-                        </a>
-                    </div>
+            <div class="col-lg-6">
+                <div class="dashboard-card">
+                    <h3 class="dashboard-card-title">Sugerencia de uso</h3>
+                    <ol class="dashboard-steps">
+                        <li>Seleccione un módulo desde el menú lateral.</li>
+                        <li>Navegue por la estructura industrial del sistema.</li>
+                        <li>Consulte o cargue planos según el rol asignado.</li>
+                        <li>Revise el historial de versiones disponible.</li>
+                        <li>Utilice los códigos QR para acceso rápido a la documentación.</li>
+                    </ol>
                 </div>
             </div>
-
-            <!-- Gestión de Posiciones - ADMIN y DESIGNER -->
-            <div class="col-md-4" sec:authorize="hasAnyRole('ADMIN','DESIGNER')">
-                <div class="card shadow-sm border-0 h-100">
-                    <div class="card-body">
-                        <h5 class="card-title">Gestión de Posiciones</h5>
-                        <p class="card-text">
-                            Administrar posiciones técnicas asociadas a cada pieza.
-                        </p>
-                        <a th:href="@{/positions}" class="btn btn-primary">
-                            Acceder
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Gestión de Planos - ADMIN, DESIGNER y OPERATOR -->
-            <div class="col-md-4" sec:authorize="hasAnyRole('ADMIN','DESIGNER','OPERATOR')">
-                <div class="card shadow-sm border-0 h-100">
-                    <div class="card-body">
-                        <h5 class="card-title">Gestión de Planos</h5>
-                        <p class="card-text">
-                            Cargar, consultar y actualizar planos técnicos e industriales.
-                        </p>
-                        <a th:href="@{/flats}" class="btn btn-primary">
-                            Acceder
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Versiones de Planos - ADMIN, DESIGNER y OPERATOR -->
-            <div class="col-md-4" sec:authorize="hasAnyRole('ADMIN','DESIGNER','OPERATOR')">
-                <div class="card shadow-sm border-0 h-100">
-                    <div class="card-body">
-                        <h5 class="card-title">Versiones de Planos</h5>
-                        <p class="card-text">
-                            Consultar el historial de versiones registradas para cada plano.
-                        </p>
-                        <a th:href="@{/versions}" class="btn btn-primary">
-                            Acceder
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Códigos QR - ADMIN, DESIGNER y OPERATOR -->
-            <div class="col-md-4" sec:authorize="hasAnyRole('ADMIN','DESIGNER','OPERATOR')">
-                <div class="card shadow-sm border-0 h-100">
-                    <div class="card-body">
-                        <h5 class="card-title">Códigos QR</h5>
-                        <p class="card-text">
-                            Consultar códigos QR generados para acceder rápidamente a los planos.
-                        </p>
-                        <a th:href="@{/qr}" class="btn btn-primary">
-                            Acceder
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-        <!-- Mensaje visible solo para OPERATOR -->
-        <div class="alert alert-info mt-4"
-             sec:authorize="hasRole('OPERATOR')">
-
-            <strong>Modo Operario:</strong>
-            su perfil permite consultar planos, visualizar archivos, descargar documentación,
-            revisar versiones y acceder mediante códigos QR. Las funciones de administración
-            quedan restringidas al Administrador o Diseñador.
-
-        </div>
-
-        <!-- Mensaje visible solo para DESIGNER -->
-        <div class="alert alert-info mt-4"
-             sec:authorize="hasRole('DESIGNER')">
-
-            <strong>Modo Diseñador:</strong>
-            su perfil permite administrar la estructura técnica, cargar planos,
-            registrar nuevas versiones y generar códigos QR. La gestión de usuarios
-            queda reservada al Administrador.
 
         </div>
 
