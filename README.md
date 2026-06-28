@@ -5,6 +5,8 @@
 El objetivo principal del proyecto es centralizar la documentación técnica, facilitar el acceso rápido a los planos, controlar versiones y permitir la consulta mediante códigos QR.
 
 ---
+Video explicativo sobre la Demo: https://youtu.be/jB7se7fe9kI
+---
 
 ## Funcionalidades principales
 
