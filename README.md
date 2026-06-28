@@ -1,6 +1,6 @@
 # PlanTrack
 
-**PlanTrack** es un prototipo web desarrollado como parte del Trabajo Final de Grado de la Licenciatura en Informática. El sistema está orientado a la gestión, consulta y trazabilidad de planos técnicos e industriales dentro de una organización.
+**PlanTrack** es un prototipo web desarrollado como parte del Trabajo Final de Grado de la carrera Licenciatura en Informática. El sistema está orientado a la gestión, consulta y trazabilidad de planos técnicos e industriales dentro de una organización.
 
 El objetivo principal del proyecto es centralizar la documentación técnica, facilitar el acceso rápido a los planos, controlar versiones y permitir la consulta mediante códigos QR.
 
