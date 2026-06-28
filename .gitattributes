@@ -1,0 +1,16 @@
+* text=auto
+*.java text
+*.html text
+*.css text
+*.js text
+*.xml text
+*.properties text
+*.md text
+
+# Keep binary files as binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.jar binary
+*.exe binary
