@@ -30,7 +30,7 @@ public class UserController {
     public String showCreateForm(Model model) {
         UserForm form = new UserForm();
         form.setEnabled(true);
-
+            
         model.addAttribute("userForm", form);
         model.addAttribute("roles", userService.findAllRoles());
         model.addAttribute("isEdit", false);

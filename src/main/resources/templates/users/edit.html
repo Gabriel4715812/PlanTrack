@@ -5,9 +5,7 @@
       layout:decorate="~{layout}">
 
 <head>
-    <title th:text="${isEdit} ? 'Editar Usuario - PlanTrack' : 'Nuevo Usuario - PlanTrack'">
-        Usuario - PlanTrack
-    </title>
+    <title>Editar Usuario - PlanTrack</title>
 </head>
 
 <body>
@@ -15,28 +13,22 @@
 <div layout:fragment="content">
 
     <div class="page-header">
-        <h1 class="page-title"
-            th:text="${isEdit} ? 'Editar usuario' : 'Registrar usuario'">
-            Registrar usuario
-        </h1>
-
-        <p class="page-subtitle"
-           th:text="${isEdit} ? 'Modifique los datos del usuario seleccionado.' : 'Complete los datos para crear un nuevo usuario dentro del sistema.'">
-            Complete los datos del usuario.
+        <h1 class="page-title">Editar usuario</h1>
+        <p class="page-subtitle">
+            Modifique los datos del usuario seleccionado.
         </p>
     </div>
 
     <div class="card shadow-sm border-0">
 
-        <div class="card-header"
-             th:text="${isEdit} ? 'Datos del usuario' : 'Nuevo usuario'">
+        <div class="card-header">
             Datos del usuario
         </div>
 
         <div class="card-body">
 
-            <form th:action="${isEdit} ? @{/users/update} : @{/users/save}"
-                  th:object="${userForm}"
+            <form th:action="@{/users/update}"
+                  th:object="${user}"
                   method="post">
 
                 <input type="hidden"
@@ -44,7 +36,6 @@
                        th:value="${_csrf.token}">
 
                 <input type="hidden"
-                       th:if="${isEdit}"
                        th:field="*{id}">
 
                 <div class="row g-3">
@@ -53,7 +44,6 @@
                         <label for="firstName" class="form-label">
                             Nombre
                         </label>
-
                         <input type="text"
                                id="firstName"
                                th:field="*{firstName}"
@@ -71,7 +61,6 @@
                         <label for="lastName" class="form-label">
                             Apellido
                         </label>
-
                         <input type="text"
                                id="lastName"
                                th:field="*{lastName}"
@@ -89,7 +78,6 @@
                         <label for="username" class="form-label">
                             Usuario
                         </label>
-
                         <input type="text"
                                id="username"
                                th:field="*{username}"
@@ -107,7 +95,6 @@
                         <label for="email" class="form-label">
                             Correo electrónico
                         </label>
-
                         <input type="email"
                                id="email"
                                th:field="*{email}"
@@ -125,51 +112,36 @@
                         <label for="phone" class="form-label">
                             Teléfono
                         </label>
-
                         <input type="text"
                                id="phone"
                                th:field="*{phone}"
                                class="form-control"
                                placeholder="Ingrese el teléfono">
-
-                        <div class="text-danger small mt-1"
-                             th:if="${#fields.hasErrors('phone')}"
-                             th:errors="*{phone}">
-                        </div>
                     </div>
 
                     <div class="col-md-6">
                         <label for="docket" class="form-label">
                             Legajo
                         </label>
-
                         <input type="text"
                                id="docket"
                                th:field="*{docket}"
                                class="form-control"
                                placeholder="Ingrese el legajo">
-
-                        <div class="text-danger small mt-1"
-                             th:if="${#fields.hasErrors('docket')}"
-                             th:errors="*{docket}">
-                        </div>
                     </div>
 
                     <div class="col-md-6">
-                        <label for="password" class="form-label"
-                               th:text="${isEdit} ? 'Nueva contraseña' : 'Contraseña'">
-                            Contraseña
+                        <label for="password" class="form-label">
+                            Nueva contraseña
                         </label>
-
                         <input type="password"
                                id="password"
                                th:field="*{password}"
                                class="form-control"
-                               th:placeholder="${isEdit} ? 'Dejar vacío para conservar la actual' : 'Ingrese una contraseña'"
-                               th:required="${!isEdit}">
+                               placeholder="Dejar vacío para conservar la actual">
 
-                        <small class="text-muted" th:if="${isEdit}">
-                            Complete este campo solo si desea cambiar la contraseña.
+                        <small class="text-muted">
+                            Solo complete este campo si desea cambiar la contraseña.
                         </small>
 
                         <div class="text-danger small mt-1"
@@ -182,7 +154,6 @@
                         <label for="roleId" class="form-label">
                             Rol
                         </label>
-
                         <select id="roleId"
                                 th:field="*{roleId}"
                                 class="form-select"
@@ -195,7 +166,6 @@
                             <option th:each="role : ${roles}"
                                     th:value="${role.id}"
                                     th:text="${role.name}">
-                                ADMIN
                             </option>
 
                         </select>
@@ -227,9 +197,8 @@
                         Cancelar
                     </a>
 
-                    <button type="submit" class="btn btn-primary"
-                            th:text="${isEdit} ? 'Guardar cambios' : 'Guardar usuario'">
-                        Guardar usuario
+                    <button type="submit" class="btn btn-primary">
+                        Guardar cambios
                     </button>
 
                 </div>
