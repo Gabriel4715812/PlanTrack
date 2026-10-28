@@ -130,25 +130,25 @@
                             </td>
 
                             <td class="text-end">
+                                <div class="d-flex flex-row flex-wrap justify-content-end gap-2">
+                                    <a th:href="@{'/versions/detail/' + ${version.id}}"
+                                       class="btn btn-info btn-sm">
+                                        Ver
+                                    </a>
 
-                                <a th:href="@{'/versions/detail/' + ${version.id}}"
-                                   class="btn btn-info btn-sm">
-                                    Ver
-                                </a>
+                                    <a th:if="${version.fileName != null}"
+                                       th:href="@{'/versions/view/' + ${version.id}}"
+                                       class="btn btn-secondary btn-sm"
+                                       target="_blank">
+                                        Visualizar
+                                    </a>
 
-                                <a th:if="${version.fileName != null}"
-                                   th:href="@{'/versions/view/' + ${version.id}}"
-                                   class="btn btn-secondary btn-sm"
-                                   target="_blank">
-                                    Visualizar
-                                </a>
-
-                                <a th:if="${version.fileName != null}"
-                                   th:href="@{'/versions/download/' + ${version.id}}"
-                                   class="btn btn-success btn-sm">
-                                    Descargar
-                                </a>
-
+                                    <a th:if="${version.fileName != null}"
+                                       th:href="@{'/versions/download/' + ${version.id}}"
+                                       class="btn btn-success btn-sm">
+                                        Descargar
+                                    </a>
+                                </div>
                             </td>
 
                         </tr>
